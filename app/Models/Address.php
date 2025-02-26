@@ -12,4 +12,9 @@ class Address extends Model
     protected $table = 'addresses';
 
     protected $fillable = ['street', 'number', 'complement', 'district', 'zip_code'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

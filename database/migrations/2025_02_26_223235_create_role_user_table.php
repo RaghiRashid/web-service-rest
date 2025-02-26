@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAddressesTable extends Migration
+class CreateRoleUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateAddressesTable extends Migration
      */
     public function up()
     {
-        Schema::create('addresses', function (Blueprint $table) {
+        Schema::create('role_customer', function (Blueprint $table) {
             $table->id();
-            $table->string('street');
-            $table->string('number', 10);
-            $table->string('district');
-            $table->string('complement')->nullable();
-            $table->char('zip_code', 8);
+            $table->foreignId('customer_id')->constrained();
+            $table->foreignId('role_id')->constrained();
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateAddressesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('addresses');
+        Schema::dropIfExists('role_customer');
     }
 }
