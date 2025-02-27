@@ -22,15 +22,19 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:customers',
+            'phone' => 'required|string',
+            'identification' => 'required|string',
             'street' => 'required|string',
-            'number' => 'required|email|unique:users',
+            'number' => 'required|string',
             'district' => 'required|min:6',
-            'complement' => 'required|string|unique:users',
+            'complement' => 'required|string',
             'zip_code' => 'required|string'
         ]);
 
-        return response()->json($this->customerService->createCustomer($data));
+        return response()->json($this->customerService->createCustomer($validatedData));
     }
 
     public function show($id)

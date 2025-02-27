@@ -17,5 +17,11 @@ class Customer extends Model
         'password',
         'identification',
         'phone',
+        'address_id'
     ];
+
+    public function address()
+    {
+        return $this->hasOne(Address::class, 'id', 'address_id');
+    }
 }

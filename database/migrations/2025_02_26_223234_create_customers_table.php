@@ -17,10 +17,9 @@ class CreateCustomersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique()->index();
-            $table->string('password');
             $table->string('identification', 11)->unique();
             $table->string('phone', 20);
-            $table->foreignId('address_id')->constrained('address')->onDelete('cascade');
+            $table->foreignId('address_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

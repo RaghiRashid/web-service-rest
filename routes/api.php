@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +19,6 @@ Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
 
 Route::group(['middleware' => ['jwt.verify']], function () {
-    Route::post('user', 'App\Http\Controllers\UserController@getAuthenticatedUser');
     Route::apiResource('users', UserController::class);
-    Route::apiResource('address', AddressController::class);
+    Route::apiResource('customers', CustomerController::class);
 });
