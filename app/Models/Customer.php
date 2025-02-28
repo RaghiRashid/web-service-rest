@@ -24,4 +24,14 @@ class Customer extends Model
     {
         return $this->hasOne(Address::class, 'id', 'address_id');
     }
+
+    public function role()
+    {
+        return $this->hasOne(Role::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_customer', 'customer_id', 'role_id');
+    }
 }
