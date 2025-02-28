@@ -114,7 +114,6 @@ class CustomerController extends Controller
             ]);
 
             return response()->json([
-                'message' => 'Usuário atualizado com sucesso!',
                 'data' => $this->customerService->updateCustomer($id, $validatedData)
             ], 200);
         } catch (ValidationException $e) {
@@ -141,12 +140,6 @@ class CustomerController extends Controller
 
     public function destroy($id)
     {
-        $deleted = $this->customerService->deleteCustomer($id);
-
-        if (!$deleted) {
-            return response()->json(['message' => 'Cliente não encontrado.'], 404);
-        }
-
-        return response()->json(['message' => 'Cliente deletado com sucesso.'], 204);
+        return $this->customerService->deleteCustomer($id);
     }
 }

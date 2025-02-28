@@ -95,7 +95,6 @@ class UserController extends Controller
             ]);
 
             return response()->json([
-                'message' => 'Usuário atualizado com sucesso!',
                 'data' => $this->userService->updateUser($id, $validatedData)
             ], 200);
         } catch (ValidationException $e) {

@@ -92,14 +92,13 @@ class UserControllerTest extends TestCase
     public function testUpdateUser()
     {
         $user = User::factory()->create();
-        $data = ['name' => 'Updated Name'];
+        $data = ['name' => 'Juca'];
 
         $response = $this->putJson("/api/users/{$user->id}", $data, ['Authorization' => "Bearer {$this->token}"]);
 
         $response->assertStatus(200)
             ->assertJson([
-                'message' => 'Usuário atualizado com sucesso!',
-                'data' => ['id' => $user->id, 'name' => 'Updated Name']
+                'data' => ['id' => $user->id, 'name' => 'Juca']
             ]);
     }
 

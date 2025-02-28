@@ -28,8 +28,18 @@ class UserRepository implements UserRepositoryInterface
             $data['password'] = bcrypt($data['password']);
         }
 
-        $user = User::findOrFail($id);
-        $user->update($data);
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'Usuário não encontrado.'], 404);
+        }
+
+        $user->update([
+            'name' => $data['name'] ?? $user->name,
+            'email' => $data['email'] ?? $user->email,
+            'password' => $data['password'] ?? $user->password,
+        ]);
+
         return $user;
     }
 

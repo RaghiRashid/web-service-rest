@@ -57,7 +57,12 @@ class CustomerRepository implements CustomerRepositoryInterface
 
     public function update($id, array $data)
     {
-        $customer = Customer::findOrFail($id);
+        $customer = Customer::find($id);
+
+        if (!$customer) {
+            return response()->json(['message' => 'Cliente não encontrado.'], 404);
+        }
+
         $address = $customer->address;
 
         $address->update([
@@ -92,9 +97,9 @@ class CustomerRepository implements CustomerRepositoryInterface
         if ($customer) {
             $customer->roles()->detach();
             $customer->delete();
-            return response()->json(['message' => 'Cliente deletado com sucesso.'], 200);
+            return response()->json(['message' => 'Cliente deletado com sucesso.'], 204);
         }
 
-        return response()->json(['message' => 'Cliente não encontrado.'], 404);
+        return response()->json(['message' => 'Não foi possível encontrar o cliente.'], 404);
     }
 }
