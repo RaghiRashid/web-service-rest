@@ -15,6 +15,14 @@ class Role extends Model
         'name'
     ];
 
+    public function configure()
+    {
+        return $this->afterCreating(function (Customer $customer) {
+            $roles = Role::factory()->count(1)->create();
+            $customer->roles()->attach($roles);
+        });
+    }
+
     public function customers()
     {
         return $this->belongsToMany(Customer::class, 'role_customer', 'role_id', 'customer_id');

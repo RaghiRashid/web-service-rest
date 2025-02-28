@@ -30,7 +30,8 @@ class CustomerController extends Controller
     {
         try {
             $request->merge([
-                'identification' => preg_replace('/\D/', '', $request->identification)
+                'identification' => preg_replace('/\D/', '', $request->identification),
+                'phone' => preg_replace('/\D/', '', $request->phone)
             ]);
 
             $validatedData = $request->validate([

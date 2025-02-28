@@ -36,6 +36,18 @@
 
 2. Configure as variáveis de ambiente no arquivo `.env` conforme necessário.
 
+3. Rode as migrations para criar as tabelas no banco de dados:
+
+    ```bash
+    php artisan migrate
+    ```
+
+4. Rode os seeders para criar as permissões:
+
+    ```bash
+    php artisan db:seed
+    ```
+
 ## Uso
 
 ### Endpoints Disponíveis
@@ -91,5 +103,5 @@ curl -X POST http://localhost/api/customers -d '{"name": "Jane Doe", "email": "j
 Para rodar os testes, utilize o seguinte comando:
 
 ```bash
-composer test
+php artisan test
 ```
