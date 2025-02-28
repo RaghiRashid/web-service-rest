@@ -58,34 +58,32 @@ class CustomerRepository implements CustomerRepositoryInterface
     public function update($id, array $data)
     {
         $customer = Customer::findOrFail($id);
-
         $address = $customer->address;
 
         $address->update([
-            'street' => $data['street'],
-            'number' => $data['number'],
-            'district' => $data['district'],
-            'complement' => $data['complement'],
-            'zip_code' => str_replace(['.', '-'], '', $data['zip_code']),
+            'street' => $data['street'] ?? $address->street,
+            'number' => $data['number'] ?? $address->number,
+            'district' => $data['district'] ?? $address->district,
+            'complement' => $data['complement'] ?? $address->complement,
+            'zip_code' => isset($data['zip_code']) ? str_replace(['.', '-'], '', $data['zip_code']) : $address->zip_code,
         ]);
 
         $customer->update([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'identification' => str_replace(['.', '-'], '', $data['identification']),
+            'name' => $data['name'] ?? $customer->name,
+            'email' => $data['email'] ?? $customer->email,
+            'phone' => $data['phone'] ?? $customer->phone,
+            'identification' => isset($data['identification']) ? str_replace(['.', '-'], '', $data['identification']) : $customer->identification,
         ]);
 
-        $customer->roles()->sync($data['permission']);
-
-        $roleName = $customer->roles()->first()->name;
+        if (!empty($data['permission'])) {
+            $customer->roles()->sync($data['permission']);
+        }
 
         return response()->json([
-            'customer' => $customer,
-            'role' => $roleName,
-            'address' => $address
+            'customer' => $customer->load(['address', 'roles'])
         ], 200);
     }
+
 
     public function delete($id)
     {

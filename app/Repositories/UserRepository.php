@@ -24,6 +24,10 @@ class UserRepository implements UserRepositoryInterface
 
     public function update($id, array $data)
     {
+        if (isset($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        }
+
         $user = User::findOrFail($id);
         $user->update($data);
         return $user;
